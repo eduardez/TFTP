@@ -137,7 +137,7 @@ class UDPClient:
 class Comandos(cmd.Cmd):
     """Shell del cliente TCP"""
     intro = "Shell del cliente TFTP-UDP. Si necesitas ayuda, escribe '?'.\n"
-    prompt = '\nTFTP@TCP>'
+    prompt = '\nTFTP@UDP>'
 
     def do_MOSTRAR(self, arg):
         """Imprimir por pantalla la informacion recibida por el cliente \nArgumentos: True, False"""
@@ -194,6 +194,7 @@ class Comandos(cmd.Cmd):
         else:
             print('***Numero de argumentos invalido.')
 
+
 def init():
     """Comprobar argumentos de entrada y crear nuevo cliente"""
     server, port = None, None
@@ -218,6 +219,7 @@ def init():
         sys.exit()
     client = UDPClient(port, server)
     return client
+
 
 def main_udp():
     global g_client

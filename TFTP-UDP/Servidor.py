@@ -1,16 +1,18 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-'''
+"""
 TFTP server layered over UDP protocol
-'''
+"""
 
 import os
+import sys
+import time
 import TFTP
 from socket import socket, AF_INET, SOCK_DGRAM
 from datetime import datetime
-g_SERVER = 'localhost'
-g_PORT = 69
+g_SERVER = None
+g_PORT = None
 
 
 def main():
@@ -81,9 +83,37 @@ class ErrorLimiteTransferencia(Exception):
     pass
 
 
+def init():
+    """Comprobar argumentos de entrada y crear nuevo cliente"""
+    server, port = None, None
+    if len(sys.argv) != 5:
+        print('Shell del SERVIDOR TFTP-UDP.\nNumero de argumentos insuficiente.' + '\nSaliendo...')
+        time.sleep(4)
+        sys.exit()
+    for index, arg in enumerate(sys.argv):
+        if arg == '-s':
+            server = str(sys.argv[index+1])
+            print('[SERVER] Server iniciado en '+server)
+        elif arg == '-p':
+            port = int(sys.argv[index+1])
+            print('[SERVER] Puerto de escucha: ' + str(port))
+    if server is None:
+        print('Shell del SERVIDOR TFTP-UDP.\nError en el servidor.\nSaliendo...')
+        time.sleep(4)
+        sys.exit()
+    elif port is None:
+        print('Shell del SERVIDOR TFTP-UDP.\nError en el puerto.\nSaliendo...')
+        time.sleep(4)
+        sys.exit()
+    global g_PORT, g_SERVER
+    g_PORT = port
+    g_SERVER = server
+
+
 def new_print(cadena, addr):
     print(datetime.today().strftime('%H:%M:%S') + ' | [' + str(addr) + '] ' + cadena)
 
 
 if __name__ == "__main__":
+    init()
     main()

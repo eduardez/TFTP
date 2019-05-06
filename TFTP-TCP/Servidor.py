@@ -2,28 +2,18 @@
 # -*- coding: utf-8 -*-
 
 """
-TFTP server layered over UDP protocol
+TFTP server layered over TCP protocol
 """
 import os
 import TFTP
-import traceback
+import sys
+import time
 from threading import Thread
 from datetime import datetime
 from socket import socket, AF_INET, SOCK_STREAM
 
-g_SERVER = 'localhost'
-g_PORT = 68
-
-
-def main():
-    sock = socket(AF_INET,SOCK_STREAM)
-    sock.bind((g_SERVER,g_PORT))
-    print('Establecido en PORT:'+str(g_PORT)+', HOST:'+g_SERVER)
-    sock.listen(5)
-    while True:
-        conn, addr = sock.accept()
-        nuevo = NuevoCliente(conn, sock, addr)
-        Thread(target=nuevo.main_loop).start()
+g_SERVER = None
+g_PORT = None
 
 
 class NuevoCliente:
@@ -85,10 +75,48 @@ class NuevoCliente:
                 self.conn.send(TFTP.error_packet('06', 'El archivo ya existe.'))
 
 
-
 def new_print(cadena, addr):
     print(datetime.today().strftime('%H:%M:%S') + ' | [' + str(addr) + '] ' + cadena)
 
 
+def init():
+    """Comprobar argumentos de entrada y crear nuevo cliente"""
+    server, port = None, None
+    if len(sys.argv) != 5:
+        print('Shell del SERVIDOR TFTP-TCP.\nNumero de argumentos insuficiente.' + '\nSaliendo...')
+        time.sleep(4)
+        sys.exit()
+    for index, arg in enumerate(sys.argv):
+        if arg == '-s':
+            server = str(sys.argv[index+1])
+            print('[SERVER] Server iniciado en '+server)
+        elif arg == '-p':
+            port = int(sys.argv[index+1])
+            print('[SERVER] Puerto de escucha: ' + str(port))
+    if server is None:
+        print('Shell del SERVIDOR TFTP-TCP.\nError en el servidor.\nSaliendo...')
+        time.sleep(4)
+        sys.exit()
+    elif port is None:
+        print('Shell del SERVIDOR TFTP-TCP.\nError en el puerto.\nSaliendo...')
+        time.sleep(4)
+        sys.exit()
+    global g_PORT, g_SERVER
+    g_PORT = port
+    g_SERVER = server
+
+
+def main():
+    sock = socket(AF_INET,SOCK_STREAM)
+    sock.bind((g_SERVER,g_PORT))
+    print('Establecido en PORT:'+str(g_PORT)+', HOST:'+g_SERVER)
+    sock.listen(5)
+    while True:
+        conn, addr = sock.accept()
+        nuevo = NuevoCliente(conn, sock, addr)
+        Thread(target=nuevo.main_loop).start()
+
+
 if __name__ == "__main__":
+    init()
     main()

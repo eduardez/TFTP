@@ -32,11 +32,11 @@ total_length = header_length + data_length
 
 
 def request_packet(type, filename):
-    '''   2 bytes   string    1 byte   string    1 byte
+    """   2 bytes   string    1 byte   string    1 byte
         ------------------------------------------------
         | Opcode | Filename |   0   |   Mode   |   0   |
         ------------------------------------------------
-                    RRQ/WRQ packet'''
+                    RRQ/WRQ packet"""
 
     if type == 'read':
         opcode = b'01'
@@ -51,33 +51,33 @@ def request_packet(type, filename):
 
 
 def data_packet(block, data):
-    '''  2 bytes    2 bytes     n bytes
+    """  2 bytes    2 bytes     n bytes
         ----------------------------------
         | Opcode  |  Block #  |   Data   |
         ----------------------------------
-                    DATA packet'''
+                    DATA packet"""
     opcode = b'03'
     paquete = opcode + itoa(int(block)) + data
     return paquete
 
 
 def ack_packet(block):
-    '''  2 bytes    2 bytes
+    """  2 bytes    2 bytes
         ---------------------
         | Opcode |  Block # |
         ---------------------
-             ACK packet'''
+             ACK packet"""
     opcode = b'04'
     paquete = opcode + block
     return paquete
 
 
 def error_packet(errorCode, errMsg):
-    '''   2 bytes    2 bytes    string   1 byte
+    """   2 bytes    2 bytes    string   1 byte
         -----------------------------------------
         | Opcode | ErrorCode |  ErrMsg  |   0   |
         -----------------------------------------
-                     ERROR packet'''
+                     ERROR packet"""
     opcode = b'05'
     paquete = opcode + errorCode.encode() + errMsg.encode() + chr(0).encode()
     return paquete
@@ -90,7 +90,7 @@ def error_packet(errorCode, errMsg):
 ##################################################
 
 def get_path(paquete):
-    '''Devuelve la ruta del archivo que esta dentro del paquete'''
+    """Devuelve la ruta del archivo que esta dentro del paquete"""
     decPacket = paquete.decode('utf-8')
     decPacket = decPacket[2:-8]
     return decPacket
@@ -127,13 +127,14 @@ def getErrMsg(packet):
 
 
 def itoa(numero):
-    ''' Para convertir el numero a 2 bytes'''
+    """ Para convertir el numero a 2 bytes"""
     return struct.pack('>H', numero & 0xFFFF)
 
 
 def atoi(data):
-    ''' Para convertir de bytes a numero'''
+    """ Para convertir de bytes a numero"""
     return struct.unpack('>H', data)[0]
+
 
 def comprobar_hash(path_original, path_nuevo):
     hasher = hashlib.md5()

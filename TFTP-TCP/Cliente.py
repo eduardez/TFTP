@@ -142,8 +142,8 @@ class ClaseCliente:
                 else:
                     print('\n*** Error desconocido en la transferencia de archivos.')
                     print('\nPaquete:' + str(pckt))
-
                     break
+                    
         except Exception:
             print('\n*****ERROR FATAL. Comprueba el codigo del CLIENTE (WRQ).')
             traceback.print_exc()
