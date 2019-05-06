@@ -1,0 +1,8 @@
+#!/usr/bin/python
+# -*- mode:python; coding:utf-8; tab-width:4 -*-
+
+import glob
+
+for f in sorted(glob.glob('*.py')):
+    t = Test('./%s' % f, expected=1)
+    t.post += FileContains(['./%s' % f, '<port>'])

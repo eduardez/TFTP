@@ -1,0 +1,10 @@
+#!/usr/bin/python
+# -*- mode:python; coding:utf-8; tab-width:4 -*-
+
+server = Daemon('./UDP_server.py 2010')
+server.pre += Not(OpenPort(2010, proto='udp'))
+
+client = Test('echo hello | ./UDP_client.py localhost 2010',
+              shell=True, detach=True, timeout=15)
+client.pre += Poll(OpenPort(2010, proto='udp'))
+client.post += FileContains("Reply is 'HELLO")

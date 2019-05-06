@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="https://bitbucket.org/arco_group/upper/raw/tip/upper" />
+    <style type="text/css">
+      <!--
+      a:link {text-decoration:none;}
+      -->
+    </style>
+    <title>Servidores y clientes UDP y TCP con Python</title>
+  </head>
+
+  <body>
+    <h1>Servidores y clientes UDP y TCP con Python</h1>
+
+    <p>
+      Estos ejemplos implementan un servicio muy simple
+      llamado <tt>upper</tt>. Los servidores <tt>upper</tt> devuelven al
+      cliente la cadena que se le envía (como el servicio <tt>echo</tt>)
+      pero transformada a mayúsculas.
+    </p>
+
+    <p>
+      Dado que su objetivo es docente, se han sacrificado los
+      controles de errores (tal como las excepciones) en favor de la
+      legibilidad y el tamaño. Una implementación correcta debería
+      añadir dichos mecanismos.
+    <p&sol;/>
+
+    <h2>UDP</h2>
+    <ul>
+      <li><a href="UDP_client.py">Cliente</a></li>
+      <li><a href="UDP_stress_client.py">Cliente para pruebas de <em>stress</em></a></li>
+      <li><a href="UDP_server.py">Servidor básico</a></li>
+      <li><a href="UDP_SS_server.py">Servidor básico, con SocketServer</a></li>
+      <li><a href="UDP_fork_server.py">Servidor multiproceso</a></li>
+      <li><a href="UDP_SS_fork_server.py">Servidor multiproceso, con
+          SocketServer</a></li>
+      <li><a href="UDP_thread_server.py">Servidor multihilo</a></li>
+      <li><a href="UDP_SS_thread_server.py">Servidor multihilo, con
+          SocketServer</a></li>
+    </ul>
+
+    <h2>TCP</h2>
+    <ul>
+      <li><a href="TCP_client.py">Cliente</a></li>
+      <li><a href="TCP_stress_client.py">Cliente para pruebas de <em>stress</em></a></li>
+      <li><a href="TCP_server.py">Servidor básico</a></li>
+      <li><a href="TCP_SS_server.py">Servidor básico, con SocketServer</a></li>
+      <li><a href="TCP_fork_server.py">Servidor multiproceso</a></li>
+      <li><a href="TCP_SS_fork_server.py">Servidor multiproceso,
+          con SocketServer</a></li>
+      <li><a href="TCP_thread_server.py">Servidor multihilo</a></li>
+      <li><a href="TCP_SS_thread_server.py">Servidor multihilo, con
+          SocketServer</a></li>
+      <li><a href="TCP_select_server.py">Servidor concurrente con select()</a></li>
+      <li><a href="TCP_asyncore_server.py">Servidor concurrente con
+	  asyncore</a></li>
+      <li><a href="TCP_twisted_server.py">Servidor concurrente con
+      Twisted</a> (<a href="http://twistedmatrix.com/trac/">Twisted Matrix</a>)</li>
+    </ul>
+
+
+    <h2>Repo mercurial</h2>
+    <p>
+      Todos estos ficheros también están disponibles para descarga como repositorio <a
+      target="_top"
+      href="http://crysol.org/mercurial-porfa">mercurial</a>. Simplemente
+      ejecuta:
+    </p>
+
+    <code style="background-color:#BBB; margin:10px; padding:7px">
+      $ hg clone <a href="https://bitbucket.org/arco_group/upper">
+	https://bitbucket.org/arco_group/upper</a>
+    </code>
+
+    <p/>
+    <br/>
+
+    <hr/>
+    <address>
+      <a href="mailto:David.Villa@ESTOSOBRA@uclm.es">David Villa Alises</a>
+    </address>
+
+  </body>
+</html>
